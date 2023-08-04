@@ -157,6 +157,8 @@ def train(train_loader, model, classifier, criterion, optimizer, epoch, opt):
 
         # update metric
         losses.update(loss.item(), bsz)
+        print(f"Labels: {labels.size()}")
+        print(f"Output: {output.size()}")
         acc1, acc5 = accuracy(output, labels, topk=(1, 5))
         top1.update(acc1[0], bsz)
 
