@@ -670,7 +670,7 @@ class VisionTransformer(nn.Module):
         x = self.se_block(x)
 
         x1 = self.head(x)
-        x1 = F.normalize(x1, dim=1)
+
         return x1
 
 
