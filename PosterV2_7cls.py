@@ -235,7 +235,7 @@ class feedforward(nn.Module):
 
 
 class pyramid_trans_expr2(nn.Module):
-    def __init__(self, img_size=224, num_classes=7, window_size=[28,14,7], num_heads=[2, 4, 8], dims=[64, 128, 256], embed_dim=768):
+    def __init__(self, img_size=224, num_classes=7, window_size=[28,14,7], num_heads=[2, 4, 8], dims=[64, 128, 256], embed_dim=768, use_head = False):
         super().__init__()
 
         self.img_size = img_size
@@ -254,7 +254,7 @@ class pyramid_trans_expr2(nn.Module):
         for param in self.face_landback.parameters():
             param.requires_grad = False
 
-        self.VIT = VisionTransformer(depth=2, embed_dim=embed_dim)
+        self.VIT = VisionTransformer(depth=2, embed_dim=embed_dim, use_head = use_head)
 
         self.ir_back = Backbone(50, 0.0, 'ir')
         ir_checkpoint = torch.load(r'C:\Users\86187\Desktop\posterv2\mixfacial\models\pretrain\ir50.pth', map_location=lambda storage, loc: storage)
