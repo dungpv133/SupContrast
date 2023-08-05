@@ -515,7 +515,7 @@ class VisionTransformer(nn.Module):
                  embed_dim=768, depth=6, num_heads=8, mlp_ratio=4.0, qkv_bias=True,
                  qk_scale=None, representation_size=None, distilled=False, drop_ratio=0.,
                  attn_drop_ratio=0., drop_path_ratio=0., embed_layer=PatchEmbed, norm_layer=None,
-                 act_layer=None):
+                 act_layer=None, use_head = False):
         """
         Args:
             img_size (int, tuple): input image size
@@ -559,6 +559,7 @@ class VisionTransformer(nn.Module):
         self.pos_drop = nn.Dropout(p=drop_ratio)
         # self.IR = IR()
         self.eca_block = eca_block()
+        self.use_head = use_head
 
 
         # self.ir_back = Backbone(50, 0.0, 'ir')
@@ -668,6 +669,8 @@ class VisionTransformer(nn.Module):
         # else:
         # print(x.shape)
         x = self.se_block(x)
+        if self.use_head is False:
+            return x
 
         x1 = self.head(x)
 
