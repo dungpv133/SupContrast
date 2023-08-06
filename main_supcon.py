@@ -251,7 +251,7 @@ def train(train_loader, model, criterion, optimizer, epoch, opt):
                    epoch, idx + 1, len(train_loader), batch_time=batch_time,
                    data_time=data_time, loss=losses))
             sys.stdout.flush()
-
+    print(losses.avg)
     return losses.avg
 
 
