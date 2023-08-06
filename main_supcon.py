@@ -242,7 +242,7 @@ def train(train_loader, model, criterion, optimizer, epoch, opt):
         #second step
         optimizer.first_step(zero_grad=True)
         images = images.cuda()
-        labels = target.cuda()
+        labels = labels.cuda()
         output = model(images)
         f1, f2 = torch.split(output, [bsz, bsz], dim=0)
         output = torch.cat([f1.unsqueeze(1), f2.unsqueeze(1)], dim=1)
