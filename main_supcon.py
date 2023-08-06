@@ -250,8 +250,9 @@ def train(train_loader, model, criterion, optimizer, epoch, opt):
                   'loss {loss.val:.3f} ({loss.avg:.3f})'.format(
                    epoch, idx + 1, len(train_loader), batch_time=batch_time,
                    data_time=data_time, loss=losses))
+            print(losses.avg)
             sys.stdout.flush()
-    print(losses.avg)
+    
     return losses.avg
 
 
