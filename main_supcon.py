@@ -16,6 +16,7 @@ from util import adjust_learning_rate, warmup_learning_rate
 from util import set_optimizer, save_model
 from networks.resnet_big import SupConResNet
 from losses import SupConLoss
+from PosterV2_7cls import *
 
 try:
     import apex
@@ -177,7 +178,8 @@ def set_loader(opt):
 
 
 def set_model(opt):
-    model = SupConResNet(name=opt.model)
+    # model = SupConResNet(name=opt.model)
+    model = pyramid_trans_expr2(img_size=32, num_classes=10)
     criterion = SupConLoss(temperature=opt.temp)
 
     # enable synchronized Batch Normalization
