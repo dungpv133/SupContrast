@@ -222,7 +222,6 @@ def train(train_loader, model, criterion, optimizer, epoch, opt):
         features = model(images)
         f1, f2 = torch.split(features, [bsz, bsz], dim=0)
         features = torch.cat([f1.unsqueeze(1), f2.unsqueeze(1)], dim=1)
-        print(f"features: {features.size()}")
         if opt.method == 'SupCon':
             loss = criterion(features, labels)
             print(f"loss: {loss}")
@@ -234,12 +233,24 @@ def train(train_loader, model, criterion, optimizer, epoch, opt):
 
         # update metric
         losses.update(loss.item(), bsz)
-        # print(f"Labels: {labels.size()}")
-        # print(f"features: {features.size()}")
+        
         # SGD
         optimizer.zero_grad()
         loss.backward()
-        optimizer.step()
+        # optimizer.step()
+
+        #second step
+        optimizer.first_step(zero_grad=True)
+        images = images.cuda()
+        labels = target.cuda()
+        output = model(images)
+        f1, f2 = torch.split(output, [bsz, bsz], dim=0)
+        output = torch.cat([f1.unsqueeze(1), f2.unsqueeze(1)], dim=1)
+        loss = criterion(output, labels)
+        losses.update(loss.item(), images.size(0))
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.second_step(zero_grad=True)
 
         # measure elapsed time
         batch_time.update(time.time() - end)
