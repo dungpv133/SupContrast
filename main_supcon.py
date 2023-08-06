@@ -221,10 +221,10 @@ def train(train_loader, model, criterion, optimizer, epoch, opt):
         features = model(images)
         f1, f2 = torch.split(features, [bsz, bsz], dim=0)
         features = torch.cat([f1.unsqueeze(1), f2.unsqueeze(1)], dim=1)
-        print(f"features: {features.size()})
+        print(f"features: {features.size()}")
         if opt.method == 'SupCon':
             loss = criterion(features, labels)
-            print(f"loss: {loss})
+            print(f"loss: {loss}")
         elif opt.method == 'SimCLR':
             loss = criterion(features)
         else:
