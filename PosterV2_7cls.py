@@ -235,7 +235,7 @@ class feedforward(nn.Module):
 
 
 class pyramid_trans_expr2(nn.Module):
-    def __init__(self, img_size=224, num_classes=7, window_size=[28,14,7], num_heads=[2, 4, 8], dims=[64, 128, 256], embed_dim=768, use_head = False):
+    def __init__(self, img_size=224, num_classes=7, window_size=[28,14,7], num_heads=[2, 4, 8], dims=[64, 128, 256], embed_dim=128, use_head = False):
         super().__init__()
 
         self.img_size = img_size
@@ -278,10 +278,10 @@ class pyramid_trans_expr2(nn.Module):
 
         self.last_face_conv = nn.Conv2d(in_channels=512, out_channels=256, kernel_size=3, padding=1)
 
-        self.embed_q = nn.Sequential(nn.Conv2d(dims[0], 768, kernel_size=3, stride=2, padding=1),
-                                     nn.Conv2d(768, 768, kernel_size=3, stride=2, padding=1))
-        self.embed_k = nn.Sequential(nn.Conv2d(dims[1], 768, kernel_size=3, stride=2, padding=1))
-        self.embed_v = PatchEmbed(img_size=14, patch_size=14, in_c=256, embed_dim=768)
+        self.embed_q = nn.Sequential(nn.Conv2d(dims[0], 128, kernel_size=3, stride=2, padding=1),
+                                     nn.Conv2d(128, 128, kernel_size=3, stride=2, padding=1))
+        self.embed_k = nn.Sequential(nn.Conv2d(dims[1], 128, kernel_size=3, stride=2, padding=1))
+        self.embed_v = PatchEmbed(img_size=14, patch_size=14, in_c=256, embed_dim=128)
 
     def forward(self, x):
         x_face = F.interpolate(x, size=112)
@@ -318,4 +318,3 @@ def compute_param_flop():
     img = torch.rand(size=(1,3,224,224))
     flops, params = profile(model, inputs=(img,))
     print(f'flops:{flops/1000**3}G,params:{params/1000**2}M')
-
