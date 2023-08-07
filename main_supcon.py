@@ -180,7 +180,7 @@ def set_loader(opt):
 
 def set_model(opt):
     # model = SupConResNet(name=opt.model)
-    model = pyramid_trans_expr2(img_size=32, num_classes=10)
+    model = pyramid_trans_expr2(img_size=32, num_classes=7)
     criterion = SupConLoss(temperature=opt.temp)
 
     # enable synchronized Batch Normalization
