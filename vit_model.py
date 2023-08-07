@@ -669,7 +669,6 @@ class VisionTransformer(nn.Module):
         # else:
         # print(x.shape)
         x = self.se_block(x)
-        return x
         if self.use_head == False:
             return x
 
