@@ -159,9 +159,9 @@ def train(train_loader, model, classifier, criterion, optimizer, epoch, opt):
         warmup_learning_rate(opt, epoch, idx, len(train_loader), optimizer)
 
         # compute loss
-        with torch.no_grad():
+        # with torch.no_grad():
             # features = model.encoder(images)
-            output = model(images).detach()
+        output = model(images)
         # output = classifier(features.detach())
         loss = criterion(output, labels)
 
