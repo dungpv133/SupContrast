@@ -119,7 +119,8 @@ def set_model(opt):
 
     if torch.cuda.is_available():
         if torch.cuda.device_count() > 1:
-            model.encoder = torch.nn.DataParallel(model.encoder)
+            # model.encoder = torch.nn.DataParallel(model.encoder)
+            model = torch.nn.DataParallel(model)
         else:
             new_state_dict = {}
             for k, v in state_dict.items():
