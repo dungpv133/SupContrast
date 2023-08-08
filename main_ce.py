@@ -117,7 +117,7 @@ def parse_option():
 
 def set_loader(opt):
     # construct data loader
-    if opt.dataset == 'cifar10':
+    if opt.dataset == 'cifar10' or opt.dataset == 'path':
         mean = (0.4914, 0.4822, 0.4465)
         std = (0.2023, 0.1994, 0.2010)
     elif opt.dataset == 'cifar100':
@@ -153,6 +153,11 @@ def set_loader(opt):
         val_dataset = datasets.CIFAR100(root=opt.data_folder,
                                         train=False,
                                         transform=val_transform)
+    elif opt.dataset == 'path':
+        train_dataset = datasets.ImageFolder(root=opt.data_folder,
+                                            transform=TwoCropTransform(train_transform))
+        val_dataset = datasets.ImageFolder(root=opt.valid_folder,
+                                            transform=TwoCropTransform(train_transform))
     else:
         raise ValueError(opt.dataset)
 
