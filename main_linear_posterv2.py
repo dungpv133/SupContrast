@@ -55,6 +55,7 @@ def parse_option():
                         choices=['cifar10', 'cifar100', 'path'], help='dataset')
     parser.add_argument('--data_folder', type=str, default=None, help='path to custom training dataset')
     parser.add_argument('--valid_folder', type=str, default=None, help='path to custom validating dataset')
+    parser.add_argument('--use_head', type=str, default='False')
 
     # other setting
     parser.add_argument('--cosine', action='store_true',
@@ -210,7 +211,8 @@ def validate(val_loader, model, classifier, criterion, opt):
             bsz = labels.shape[0]
 
             # forward
-            output = classifier(model.encoder(images))
+            # output = classifier(model.encoder(images))
+            output = model(images)
             loss = criterion(output, labels)
 
             # update metric
