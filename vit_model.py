@@ -670,6 +670,7 @@ class VisionTransformer(nn.Module):
         # print(x.shape)
         x = self.se_block(x)
         x1 = self.head(x)
+        return x1
         if self.use_head == "False":
             return x
 
