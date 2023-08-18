@@ -31,7 +31,7 @@ cd /kaggle/working/SupContrast
   --cosine \
   --epochs 30
 ```
-Linear evaluation stage:
+Linear evaluation stage: (ckpt is path of pretrained model from pretraining stage)
 ``` bash
 !python main_linear.py --batch_size 32 \
   --learning_rate 5 \
@@ -54,7 +54,7 @@ cd /kaggle/working/SupContrast
   --std "(0.2023, 0.1994, 0.2010)" \
   --use_head "False"
 ```
-Linear evaluation stage:
+Linear evaluation stage: (ckpt is path of pretrained model from pretraining stage)
 ``` bash
 !python main_linear_posterv2.py --batch_size 32 \
   --learning_rate 5 \
