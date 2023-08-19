@@ -243,6 +243,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
         output = model(images)
         f1, f2 = torch.split(output, bsz, dim=0)
         output = torch.cat([f1.unsqueeze(1), f2.unsqueeze(1)], dim=1)
+        print(output.size())
+        print(target.size())
         loss = criterion(output, target)
 
         # measure accuracy and record loss
