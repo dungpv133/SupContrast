@@ -8,7 +8,7 @@ import torch.utils.data as data
 import os
 import argparse
 from sklearn.metrics import f1_score, confusion_matrix
-from data_preprocessing.sam import SAM
+from sam import SAM
 import torch.nn.parallel
 import torch.backends.cudnn as cudnn
 import torch.optim
