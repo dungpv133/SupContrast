@@ -19,7 +19,7 @@ import torchvision.datasets as datasets
 import torchvision.transforms as transforms
 import numpy as np
 import datetime
-from models.PosterV2_7cls import *
+from PosterV2_7cls import *
 from losses import SupConLoss
 import torch.nn.functional as F
 from util import TwoCropTransform, AverageMeter
