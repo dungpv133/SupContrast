@@ -231,7 +231,7 @@ def train(train_loader, model, criterion, optimizer, epoch, opt):
         # print(labels.size())
         if opt.method == 'SupCon':
             loss = criterion(features, labels)
-            print("Use SupCon loss")
+            # print("Use SupCon loss")
             # print(f"loss: {loss}")
         elif opt.method == 'SimCLR':
             loss = criterion(features)
