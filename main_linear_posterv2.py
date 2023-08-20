@@ -248,8 +248,8 @@ def main():
     model, classifier, criterion = set_model(opt)
 
     # build optimizer
-    # optimizer = set_optimizer(opt, classifier)
-    optimizer = SAM(model.parameters(), base_optimizer = torch.optim.Adam, lr=opt.learning_rate, rho=0.05, adaptive=False, )
+    optimizer = set_optimizer(opt, classifier)
+    # optimizer = SAM(model.parameters(), base_optimizer = torch.optim.Adam, lr=opt.learning_rate, rho=0.05, adaptive=False, )
 
     # training routine
     for epoch in range(1, opt.epochs + 1):
