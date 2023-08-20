@@ -13,6 +13,8 @@ from util import AverageMeter
 from util import adjust_learning_rate, warmup_learning_rate, accuracy
 from util import set_optimizer
 from networks.resnet_big import SupConResNet, LinearClassifier
+from sam import SAM
+from PosterV2_7cls import *
 
 try:
     import apex
@@ -60,6 +62,8 @@ def parse_option():
 
     parser.add_argument('--ckpt', type=str, default='',
                         help='path to pre-trained model')
+    parser.add_argument('--use_head', type=str, default='False',
+                        help='using classification head')
 
     opt = parser.parse_args()
 
@@ -101,7 +105,11 @@ def parse_option():
 
 
 def set_model(opt):
-    model = SupConResNet(name=opt.model)
+    # model = SupConResNet(name=opt.model)
+    set_head = False
+    if(opt.use_head == 'True'):
+        set_head = True
+    model = pyramid_trans_expr2(img_size=224, num_classes=7, use_head = set_head)
     criterion = torch.nn.CrossEntropyLoss()
 
     classifier = LinearClassifier(name=opt.model, num_classes=opt.n_cls)
@@ -150,11 +158,14 @@ def train(train_loader, model, classifier, criterion, optimizer, epoch, opt):
         warmup_learning_rate(opt, epoch, idx, len(train_loader), optimizer)
 
         # compute loss
-        with torch.no_grad():
-            features = model.encoder(images)
-        output = classifier(features.detach())
-        loss = criterion(output, labels)
+        # with torch.no_grad():
+        #     features = model.encoder(images)
+        # output = classifier(features.detach())
+        # loss = criterion(output, labels)
 
+        # using POSTERV2 as model
+        output = model(images)
+        loss = criterion(output, labels)
         # update metric
         losses.update(loss.item(), bsz)
         # print(f"Labels: {labels.size()}")
