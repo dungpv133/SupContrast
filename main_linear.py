@@ -165,6 +165,8 @@ def train(train_loader, model, classifier, criterion, optimizer, epoch, opt):
 
         # using POSTERV2 as model
         output = model(images)
+        print(output.size())
+        print(labels.size())
         loss = criterion(output, labels)
         # update metric
         losses.update(loss.item(), bsz)
