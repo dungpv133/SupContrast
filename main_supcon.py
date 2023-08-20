@@ -245,20 +245,20 @@ def train(train_loader, model, criterion, optimizer, epoch, opt):
         # SGD
         optimizer.zero_grad()
         loss.backward()
-        optimizer.step()
+        # optimizer.step()
 
         #second step
-        # optimizer.first_step(zero_grad=True)
-        # images = images.cuda()
-        # labels = labels.cuda()
-        # output = model(images)
-        # f1, f2 = torch.split(output, [bsz, bsz], dim=0)
-        # output = torch.cat([f1.unsqueeze(1), f2.unsqueeze(1)], dim=1)
-        # loss = criterion(output, labels)
-        # losses.update(loss.item(), images.size(0))
-        # optimizer.zero_grad()
-        # loss.backward()
-        # optimizer.second_step(zero_grad=True)
+        optimizer.first_step(zero_grad=True)
+        images = images.cuda()
+        labels = labels.cuda()
+        output = model(images)
+        f1, f2 = torch.split(output, [bsz, bsz], dim=0)
+        output = torch.cat([f1.unsqueeze(1), f2.unsqueeze(1)], dim=1)
+        loss = criterion(output, labels)
+        losses.update(loss.item(), images.size(0))
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.second_step(zero_grad=True)
 
         # measure elapsed time
         batch_time.update(time.time() - end)
@@ -287,8 +287,8 @@ def main():
     model, criterion = set_model(opt)
 
     # build optimizer
-    optimizer = set_optimizer(opt, model)
-    # optimizer = SAM(model.parameters(), base_optimizer = torch.optim.Adam, lr=opt.learning_rate, rho=0.05, adaptive=False, )
+    # optimizer = set_optimizer(opt, model)
+    optimizer = SAM(model.parameters(), base_optimizer = torch.optim.Adam, lr=opt.learning_rate, rho=0.05, adaptive=False, )
 
     # tensorboard
     logger = tb_logger.Logger(logdir=opt.tb_folder, flush_secs=2)
