@@ -141,8 +141,8 @@ def set_loader(opt):
         mean = eval(opt.mean)
         std = eval(opt.std)
     elif opt.dataset == 'rafdb':
-        mean = [0.485, 0.456, 0.406]
-        std = [0.229, 0.224, 0.225]
+        mean = (0.485, 0.456, 0.406)
+        std = (0.229, 0.224, 0.225)
     else:
         raise ValueError('dataset not supported: {}'.format(opt.dataset))
     normalize = transforms.Normalize(mean=mean, std=std)
@@ -157,7 +157,7 @@ def set_loader(opt):
         transforms.ToTensor(),
         normalize,
     ])
-    train_transform = transforms.Compose([transforms.Resize((224, 224)),
+    raf_db_train_transform = transforms.Compose([transforms.Resize((224, 224)),
                                                                  transforms.RandomHorizontalFlip(),
                                                                  transforms.ToTensor(),
                                                                  transforms.Normalize(mean=[0.485, 0.456, 0.406],
@@ -173,10 +173,10 @@ def set_loader(opt):
                                           download=True)
     elif opt.dataset == 'path':
         train_dataset = datasets.ImageFolder(root=opt.data_folder,
-                                            transform=TwoCropTransform(train_transform))
+                                            transform=TwoCropTransform(raf_db_train_transform))
     elif opt.dataset == 'rafdb':
         train_dataset = datasets.ImageFolder(root=opt.data_folder,
-                                             transform=TwoCropTransform(train_transform))
+                                             transform=TwoCropTransform(raf_db_train_transform))
     else:
         raise ValueError(opt.dataset)
 
