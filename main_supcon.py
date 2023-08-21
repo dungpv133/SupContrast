@@ -16,6 +16,7 @@ from util import adjust_learning_rate, warmup_learning_rate
 from util import set_optimizer, save_model
 from networks.resnet_big import SupConResNet
 from losses import SupConLoss
+from PosterV2_7cls import *
 
 try:
     import apex
@@ -139,6 +140,9 @@ def set_loader(opt):
     elif opt.dataset == 'path':
         mean = eval(opt.mean)
         std = eval(opt.std)
+    elif opt.dataset == 'rafdb':
+        mean = [0.485, 0.456, 0.406]
+        std = [0.229, 0.224, 0.225]
     else:
         raise ValueError('dataset not supported: {}'.format(opt.dataset))
     normalize = transforms.Normalize(mean=mean, std=std)
@@ -165,6 +169,14 @@ def set_loader(opt):
     elif opt.dataset == 'path':
         train_dataset = datasets.ImageFolder(root=opt.data_folder,
                                             transform=TwoCropTransform(train_transform))
+    elif opt.dataset == 'rafdb':
+        train_dataset = datasets.ImageFolder(traindir,
+                                             transforms.Compose([transforms.Resize((224, 224)),
+                                                                 transforms.RandomHorizontalFlip(),
+                                                                 transforms.ToTensor(),
+                                                                 transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                                                                      std=[0.229, 0.224, 0.225]),
+                                                                 transforms.RandomErasing(scale=(0.02, 0.1))]))
     else:
         raise ValueError(opt.dataset)
 
@@ -177,7 +189,8 @@ def set_loader(opt):
 
 
 def set_model(opt):
-    model = SupConResNet(name=opt.model)
+    # model = SupConResNet(name=opt.model)
+    model = pyramid_trans_expr2(img_size=224, num_classes=7)
     criterion = SupConLoss(temperature=opt.temp)
 
     # enable synchronized Batch Normalization
