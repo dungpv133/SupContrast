@@ -170,7 +170,7 @@ def set_loader(opt):
         train_dataset = datasets.ImageFolder(root=opt.data_folder,
                                             transform=TwoCropTransform(train_transform))
     elif opt.dataset == 'rafdb':
-        train_dataset = datasets.ImageFolder(root=opt.data_folder,
+        train_dataset = datasets.ImageFolder(opt.data_folder,
                                              transforms.Compose([transforms.Resize((224, 224)),
                                                                  transforms.RandomHorizontalFlip(),
                                                                  transforms.ToTensor(),
