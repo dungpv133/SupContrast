@@ -132,7 +132,8 @@ def set_model(opt):
         criterion = criterion.cuda()
         cudnn.benchmark = True
 
-        model.load_state_dict(state_dict)
+        # model.load_state_dict(state_dict)
+        model.load_state_dict(ckpt['state_dict'])
 
     return model, classifier, criterion
 
