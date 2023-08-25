@@ -141,7 +141,12 @@ def set_loader(opt):
         transforms.ToTensor(),
         normalize,
     ])
-
+    raf_db_train_transform = transforms.Compose([transforms.Resize((224, 224)),
+                                                                 transforms.RandomHorizontalFlip(),
+                                                                 transforms.ToTensor(),
+                                                                 transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                                                                      std=[0.229, 0.224, 0.225]),
+                                                                 transforms.RandomErasing(scale=(0.02, 0.1))])
     if opt.dataset == 'cifar10':
         train_dataset = datasets.CIFAR10(root=opt.data_folder,
                                          transform=train_transform,
@@ -157,6 +162,11 @@ def set_loader(opt):
                                         train=False,
                                         transform=val_transform)
     elif opt.dataset == 'path':
+        train_dataset = datasets.ImageFolder(root=opt.data_folder,
+                                            transform=train_transform)
+        val_dataset = datasets.ImageFolder(root=opt.valid_folder,
+                                            transform=val_transform)
+    elif opt.dataset == 'rafdb':
         train_dataset = datasets.ImageFolder(root=opt.data_folder,
                                             transform=train_transform)
         val_dataset = datasets.ImageFolder(root=opt.valid_folder,
