@@ -52,7 +52,7 @@ def parse_option():
     # model dataset
     parser.add_argument('--model', type=str, default='resnet50')
     parser.add_argument('--dataset', type=str, default='cifar10',
-                        choices=['cifar10', 'cifar100', 'path'], help='dataset')
+                        choices=['cifar10', 'cifar100', 'path', 'rafdb'], help='dataset')
     parser.add_argument('--data_folder', type=str, default=None, help='path to custom training dataset')
     parser.add_argument('--valid_folder', type=str, default=None, help='path to custom validating dataset')
     parser.add_argument('--use_head', type=str, default='False')
@@ -100,6 +100,8 @@ def parse_option():
         opt.n_cls = 10
     elif opt.dataset == 'cifar100':
         opt.n_cls = 100
+    elif opt.dataset == 'rafdb':
+        opt.n_cls = 7
     elif opt.dataset == 'path':
         opt.n_cls = 7
     else:
