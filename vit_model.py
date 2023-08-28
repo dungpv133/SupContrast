@@ -669,11 +669,12 @@ class VisionTransformer(nn.Module):
         # else:
         # print(x.shape)
         x = self.se_block(x)
+        norms = torch.norm(x, 2, 1, True)
         # return x
-        x1 = self.head(x)
+        x1 = self.head(norms)
         # return x1
         if self.use_head == False:
-            return x
+            return norms
         return x1
 
 
