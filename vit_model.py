@@ -670,7 +670,7 @@ class VisionTransformer(nn.Module):
         # print(x.shape)
         x = self.se_block(x)
         norms = torch.norm(x, 2, 1, True)
-        embeddings = torch.div(y_hat, norms)
+        embeddings = torch.div(x, norms)
         # return x
         x1 = self.head(embeddings)
         # return x1
