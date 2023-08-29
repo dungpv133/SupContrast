@@ -51,6 +51,8 @@ def parse_option():
     parser.add_argument('--model', type=str, default='resnet50')
     parser.add_argument('--dataset', type=str, default='cifar10',
                         choices=['cifar10', 'cifar100', 'rafdb'], help='dataset')
+    parser.add_argument('--data_folder', type=str, default=None, help='path to custom training dataset')
+    parser.add_argument('--valid_folder', type=str, default=None, help='path to custom validating dataset')
 
     # other setting
     parser.add_argument('--cosine', action='store_true',
