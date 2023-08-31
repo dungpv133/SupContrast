@@ -671,6 +671,7 @@ class VisionTransformer(nn.Module):
         x = self.se_block(x)
         # norms = torch.norm(x, 2, 1, True)
         # embeddings = torch.div(x, norms)
+        x = F.normalize(x, dim = 1)
         x1 = self.head(x)
         if self.use_head == False:
             return x
