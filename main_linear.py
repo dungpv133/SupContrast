@@ -118,16 +118,16 @@ def set_model(opt):
 
     if torch.cuda.is_available():
         # if torch.cuda.device_count() > 1:
-        model.encoder = torch.nn.DataParallel(model.encoder)
+        # model.encoder = torch.nn.DataParallel(model.encoder)
         # else:
         #     new_state_dict = {}
         #     for k, v in state_dict.items():
         #         k = k.replace("module.", "")
         #         new_state_dict[k] = v
         #     state_dict = new_state_dict
-        # device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-        # model = nn.DataParallel(model, device_ids=[0, 1])
-        # model.to(device)
+        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        model = nn.DataParallel(model, device_ids=[0, 1])
+        model.to(device)
         model = model.cuda()
         classifier = classifier.cuda()
         criterion = criterion.cuda()
