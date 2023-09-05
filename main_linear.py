@@ -67,7 +67,8 @@ def parse_option():
     opt = parser.parse_args()
 
     # set the path according to the environment
-    opt.data_folder = './datasets/'
+    # opt.data_folder = './datasets/'
+    opt.data_folder = '/kaggle/input/rafdb-valid/raf-db/'
 
     iterations = opt.lr_decay_epochs.split(',')
     opt.lr_decay_epochs = list([])
