@@ -33,7 +33,7 @@ cd /kaggle/working/SupContrast
 ```
 Linear evaluation stage: (ckpt is path of pretrained model from pretraining stage)
 ``` bash
-!python main_linear.py --batch_size 32 \
+!python main_linear_original.py --batch_size 32 \
   --learning_rate 5 \
   --epochs 20 \
   --ckpt /kaggle/input/model-supcon/last.pth
@@ -56,7 +56,7 @@ cd /kaggle/working/SupContrast
 ```
 Linear evaluation stage: (ckpt is path of pretrained model from pretraining stage)
 ``` bash
-!python main_linear_posterv2.py --batch_size 32 \
+!python main_linear.py --batch_size 32 \
   --learning_rate 5 \
   --epochs 20 \
   --ckpt /kaggle/input/model-supcon-posterv2/last.pth \
